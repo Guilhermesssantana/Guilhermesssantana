@@ -1,0 +1,208 @@
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at top, #120b3d 0%, #05020f 60%);
+  color: #fff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.banner {
+  width: min(100%, 960px);
+  padding: 28px;
+  border-radius: 28px;
+  background: linear-gradient(180deg, rgba(7, 11, 46, 0.92), rgba(5, 5, 17, 0.83));
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.48);
+  overflow: hidden;
+  position: relative;
+}
+
+.banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 75% 10%, rgba(255,255,255,0.18), transparent 20%),
+              radial-gradient(circle at 15% 20%, rgba(0,208,255,0.16), transparent 16%);
+  pointer-events: none;
+}
+
+.title {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 18px;
+  font-size: clamp(2rem, 4vw, 3.8rem);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #ffe600;
+  text-shadow: 0 0 18px rgba(255,230,0,0.75);
+}
+
+.subtitle {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 30px;
+  color: #ddd;
+  font-size: 1rem;
+  opacity: 0.92;
+}
+
+.maze {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  border-radius: 24px;
+  background: radial-gradient(circle at center, #161b50 0%, #070717 82%);
+  overflow: hidden;
+  box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.05);
+  z-index: 1;
+}
+
+.maze-grid {
+  position: absolute;
+  inset: 30px;
+  display: grid;
+  grid-template-columns: repeat(20, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  gap: 10px;
+}
+
+.wall {
+  background: linear-gradient(180deg, #4c73ff, #11247a);
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  border-radius: 10px;
+  box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.45);
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ffe600;
+  box-shadow: 0 0 12px rgba(255, 230, 0, 0.85);
+  justify-self: center;
+  align-self: center;
+}
+
+.pacman {
+  position: absolute;
+  width: 46px;
+  height: 46px;
+  top: 66px;
+  left: 72px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #fff12a 0%, #f5c200 30%, #f5c200 100%);
+  clip-path: polygon(100% 50%, 0% 15%, 0% 85%);
+  animation: chomp 0.28s infinite ease-in-out, movePacman 6.5s infinite linear;
+  z-index: 2;
+}
+
+.ghost {
+  position: absolute;
+  width: 46px;
+  height: 46px;
+  background: #ff004f;
+  border-radius: 0 0 14px 14px;
+  top: 188px;
+  left: 266px;
+  animation: ghostWalk 4s infinite ease-in-out;
+  z-index: 2;
+}
+
+.ghost::before {
+  content: '';
+  position: absolute;
+  top: -16px;
+  left: 0;
+  width: 100%;
+  height: 32px;
+  background: #ff004f;
+  border-radius: 50%;
+}
+
+.ghost::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 4px;
+  width: 38px;
+  height: 12px;
+  background: transparent;
+  box-shadow: 0 0 0 6px #ff004f, 0 0 0 8px #ff004f, -10px 0 0 0 #05020f, 10px 0 0 0 #05020f;
+  border-radius: 0 0 12px 12px;
+}
+
+.ghost-eye {
+  position: absolute;
+  width: 11px;
+  height: 16px;
+  background: #fff;
+  border-radius: 50%;
+  top: 10px;
+  left: 10px;
+  box-shadow: 18px 0 0 #fff;
+}
+
+.ghost-eye::after {
+  content: '';
+  position: absolute;
+  width: 5px;
+  height: 8px;
+  background: #05020f;
+  border-radius: 50%;
+  top: 4px;
+  left: 4px;
+  animation: eyeMove 1.2s infinite alternate ease-in-out;
+}
+
+@keyframes chomp {
+  0%, 100% { clip-path: polygon(100% 50%, 0% 15%, 0% 85%); }
+  50% { clip-path: polygon(100% 50%, 0% 0%, 0% 100%); }
+}
+
+@keyframes movePacman {
+  0%, 100% { transform: translate(0, 0); }
+  16% { transform: translate(240px, 0); }
+  32% { transform: translate(240px, 120px); }
+  48% { transform: translate(0, 120px); }
+  64% { transform: translate(0, 240px); }
+  80% { transform: translate(240px, 240px); }
+}
+
+@keyframes ghostWalk {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-96px); }
+}
+
+@keyframes eyeMove {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(4px); }
+}
+
+@keyframes glow {
+  0%, 100% { opacity: 0.28; }
+  50% { opacity: 0.82; }
+}
+
+.maze::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.1), transparent 25%),
+              radial-gradient(circle at 70% 70%, rgba(255,255,255,0.08), transparent 24%);
+  pointer-events: none;
+  animation: glow 4s infinite ease-in-out;
+}
+
+.label {
+  position: absolute;
+  right: 28px;
+  top: 28px;
+  color: #8ec7ff;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  opacity: 0.88;
+  z-index: 1;
+}
